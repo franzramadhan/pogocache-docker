@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Build pogocache command with arguments from environment variables
+CMD="/app/pogocache"
+
+# Set default values
+: ${POGOCACHE_HOST:="0.0.0.0"}
+
+# Basic options
+CMD="$CMD -h $POGOCACHE_HOST"
+[ -n "$POGOCACHE_PORT" ] && CMD="$CMD -p $POGOCACHE_PORT"
+[ -n "$POGOCACHE_SOCKET" ] && CMD="$CMD -s $POGOCACHE_SOCKET"
+[ -n "$POGOCACHE_VERBOSE" ] && CMD="$CMD $POGOCACHE_VERBOSE"
+
+# Additional options
+[ -n "$POGOCACHE_THREADS" ] && CMD="$CMD --threads $POGOCACHE_THREADS"
+[ -n "$POGOCACHE_MAXMEMORY" ] && CMD="$CMD --maxmemory $POGOCACHE_MAXMEMORY"
+[ -n "$POGOCACHE_EVICT" ] && CMD="$CMD --evict $POGOCACHE_EVICT"
+[ -n "$POGOCACHE_PERSIST" ] && CMD="$CMD --persist $POGOCACHE_PERSIST"
+[ -n "$POGOCACHE_MAXCONNS" ] && CMD="$CMD --maxconns $POGOCACHE_MAXCONNS"
+
+# Security options
+[ -n "$POGOCACHE_AUTH" ] && CMD="$CMD --auth $POGOCACHE_AUTH"
+[ -n "$POGOCACHE_TLSPORT" ] && CMD="$CMD --tlsport $POGOCACHE_TLSPORT"
+[ -n "$POGOCACHE_TLSCERT" ] && CMD="$CMD --tlscert $POGOCACHE_TLSCERT"
+[ -n "$POGOCACHE_TLSKEY" ] && CMD="$CMD --tlskey $POGOCACHE_TLSKEY"
+[ -n "$POGOCACHE_TLSCACERT" ] && CMD="$CMD --tlscacert $POGOCACHE_TLSCACERT"
+
+# Advanced options
+[ -n "$POGOCACHE_SHARDS" ] && CMD="$CMD --shards $POGOCACHE_SHARDS"
+[ -n "$POGOCACHE_BACKLOG" ] && CMD="$CMD --backlog $POGOCACHE_BACKLOG"
+[ -n "$POGOCACHE_QUEUESIZE" ] && CMD="$CMD --queuesize $POGOCACHE_QUEUESIZE"
+[ -n "$POGOCACHE_REUSEPORT" ] && CMD="$CMD --reuseport $POGOCACHE_REUSEPORT"
+[ -n "$POGOCACHE_TCPNODELAY" ] && CMD="$CMD --tcpnodelay $POGOCACHE_TCPNODELAY"
+[ -n "$POGOCACHE_QUICKACK" ] && CMD="$CMD --quickack $POGOCACHE_QUICKACK"
+[ -n "$POGOCACHE_URING" ] && CMD="$CMD --uring $POGOCACHE_URING"
+[ -n "$POGOCACHE_LOADFACTOR" ] && CMD="$CMD --loadfactor $POGOCACHE_LOADFACTOR"
+[ -n "$POGOCACHE_AUTOSWEEP" ] && CMD="$CMD --autosweep $POGOCACHE_AUTOSWEEP"
+[ -n "$POGOCACHE_KEYSIXPACK" ] && CMD="$CMD --keysixpack $POGOCACHE_KEYSIXPACK"
+[ -n "$POGOCACHE_CAS" ] && CMD="$CMD --cas $POGOCACHE_CAS"
+
+# Execute the command
+exec $CMD

@@ -1,0 +1,51 @@
+FROM alpine:3
+
+# Install required packages
+RUN apk add --no-cache ca-certificates bash
+
+# Set working directory
+WORKDIR /app
+
+# Supported environment variables for pogocache configuration
+# Basic options
+ENV POGOCACHE_HOST=0.0.0.0
+# ENV POGOCACHE_PORT=
+# ENV POGOCACHE_SOCKET=
+# ENV POGOCACHE_VERBOSE=
+
+# Additional options
+# ENV POGOCACHE_THREADS=
+# ENV POGOCACHE_MAXMEMORY=
+# ENV POGOCACHE_EVICT=
+# ENV POGOCACHE_PERSIST=
+# ENV POGOCACHE_MAXCONNS=
+
+# Security options
+# ENV POGOCACHE_AUTH=
+# ENV POGOCACHE_TLSPORT=
+# ENV POGOCACHE_TLSCERT=
+# ENV POGOCACHE_TLSKEY=
+# ENV POGOCACHE_TLSCACERT=
+
+# Advanced options
+# ENV POGOCACHE_SHARDS=
+# ENV POGOCACHE_BACKLOG=
+# ENV POGOCACHE_QUEUESIZE=
+# ENV POGOCACHE_REUSEPORT=
+# ENV POGOCACHE_TCPNODELAY=
+# ENV POGOCACHE_QUICKACK=
+# ENV POGOCACHE_URING=
+# ENV POGOCACHE_LOADFACTOR=
+# ENV POGOCACHE_AUTOSWEEP=
+# ENV POGOCACHE_KEYSIXPACK=
+# ENV POGOCACHE_CAS=
+
+# Copy the pogocache binary
+COPY pogocache-linux-amd64-musl/pogocache .
+
+# Copy the entrypoint script
+COPY entrypoint /app/entrypoint
+RUN chmod +x /app/entrypoint
+
+# Set the entrypoint
+ENTRYPOINT ["/app/entrypoint"]
