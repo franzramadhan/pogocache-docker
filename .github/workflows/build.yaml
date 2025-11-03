@@ -27,7 +27,6 @@ jobs:
           repository: 'pogocache/pogocache'
           tag: ${{ github.ref_name }}
           filename: pogocache-linux-${{ matrix.arch }}.tar.gz
-          tarBall: true
           extract: true
 
       - name: Fetch pogocache musl artifacts
@@ -37,7 +36,6 @@ jobs:
           repository: 'pogocache/pogocache'
           tag: ${{ github.ref_name }}
           filename: pogocache-linux-${{ matrix.arch }}-musl.tar.gz
-          tarBall: true
           extract: true
 
       - name: Login to GitHub Container Registry
