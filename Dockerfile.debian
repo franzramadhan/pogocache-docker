@@ -40,12 +40,23 @@ ENV POGOCACHE_HOST=0.0.0.0
 # ENV POGOCACHE_KEYSIXPACK=
 # ENV POGOCACHE_CAS=
 
-# Copy the pogocache binary
-COPY pogocache-linux-amd64/pogocache .
+# Copy the pogocache binaries
+COPY pogocache-linux-amd64 .
+COPY pogocache-linux-arm64 .
+
+# Create platform-specific symlink
+ARG TARGETARCH
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        ln -s /app/pogocache-linux-amd64/pogocache /app/pogocache; \
+    elif [ "$TARGETARCH" = "arm64" ]; then \
+        ln -s /app/pogocache-linux-arm64/pogocache /app/pogocache; \
+    fi
 
 # Copy the entrypoint script
 COPY entrypoint /app/entrypoint
 RUN chmod +x /app/entrypoint
+
+
 
 # Set the entrypoint
 ENTRYPOINT ["/app/entrypoint"]

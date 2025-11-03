@@ -1,7 +1,7 @@
-FROM debian:trixie
+FROM alpine:3
 
 # Install required packages
-RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache ca-certificates bash
 
 # Set working directory
 WORKDIR /app
@@ -40,8 +40,17 @@ ENV POGOCACHE_HOST=0.0.0.0
 # ENV POGOCACHE_KEYSIXPACK=
 # ENV POGOCACHE_CAS=
 
-# Copy the pogocache binary
-COPY pogocache-linux-arm64/pogocache .
+# Copy the pogocache binaries
+COPY pogocache-linux-amd64-musl .
+COPY pogocache-linux-arm64-musl .
+
+# Create platform-specific symlink
+ARG TARGETARCH
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+        ln -s /app/pogocache-linux-amd64-musl/pogocache /app/pogocache; \
+    elif [ "$TARGETARCH" = "arm64" ]; then \
+        ln -s /app/pogocache-linux-arm64-musl/pogocache /app/pogocache; \
+    fi
 
 # Copy the entrypoint script
 COPY entrypoint /app/entrypoint

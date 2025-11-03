@@ -11,7 +11,6 @@ jobs:
     strategy:
       matrix:
         os: [alpine, debian]
-        arch: [amd64, arm64]
 
     steps:
       - name: Checkout repository
@@ -26,7 +25,7 @@ jobs:
         with:
           repository: 'pogocache/pogocache'
           tag: ${{ github.ref_name }}
-          filename: pogocache-linux-${{ matrix.arch }}.tar.gz
+          filename: pogocache-linux-*.tar.gz
           extract: true
 
       - name: Fetch pogocache musl artifacts
@@ -35,7 +34,7 @@ jobs:
         with:
           repository: 'pogocache/pogocache'
           tag: ${{ github.ref_name }}
-          filename: pogocache-linux-${{ matrix.arch }}-musl.tar.gz
+          filename: pogocache-linux-*-musl.tar.gz
           extract: true
 
       - name: Login to GitHub Container Registry
@@ -50,8 +49,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/pogocache:latest,ghcr.io/${{ github.repository_owner }}/pogocache:${{ github.ref_name }}
-          platforms: linux/${{ matrix.arch }}
-          file: Dockerfile.${{ matrix.os }}.${{ matrix.arch }}
+          tags: ghcr.io/${{ github.repository_owner }}/pogocache:${{ matrix.os }}-latest,ghcr.io/${{ github.repository_owner }}/pogocache:${{ matrix.os }}-${{ github.ref_name }}
+          platforms: linux/amd64,linux/arm64
+          file: Dockerfile.${{ matrix.os }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
