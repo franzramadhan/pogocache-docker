@@ -60,7 +60,5 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 COPY entrypoint /app/entrypoint
 RUN chmod +x /app/entrypoint
 
-
-
 # Set the entrypoint
 ENTRYPOINT ["/app/entrypoint"]
