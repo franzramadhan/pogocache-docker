@@ -5,7 +5,7 @@ Unofficial Docker image for [pogocache](https://github.com/pogocache/pogocache) 
 ## Features
 
 - Multi-architecture support (amd64, arm64)
-- Environment variable-based configuration (**not available in upstream**)
+- Environment variable-based arguments
 - Both Alpine and Debian base images
 - Kubernetes deployment examples included
 - Automated builds via GitHub Actions
@@ -44,7 +44,7 @@ services:
 
 ## Environment Variable Configuration
 
-**Key Feature:** This Docker image allows you to configure pogocache through environment variables, which is **not available in the upstream project**. The entrypoint script automatically converts these variables to command-line arguments.
+**Key Feature:** This Docker image allows you to configure each pogocache arguments through environment variables. The entrypoint script automatically converts these variables to command-line arguments.
 
 ### Basic Options
 
